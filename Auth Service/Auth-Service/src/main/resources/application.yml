@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: Auth-Service
+
+  data:
+    mongodb:
+      database: insta-auth-service
+
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:8002
+          configuration:
+            key:
+              serializer: org.apache.kafka.common.serialization.SpringSerializer

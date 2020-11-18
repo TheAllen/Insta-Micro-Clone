@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.springframework.cloud:spring-cloud-function-core:3.1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/cloud/spring-cloud-function-core/3.1.0-SNAPSHOT/spring-cloud-function-core-3.1.0-20201118.030446-258.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/cloud/spring-cloud-function-core/3.1.0-SNAPSHOT/spring-cloud-function-core-3.1.0-20201118.030446-258-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/cloud/spring-cloud-function-core/3.1.0-SNAPSHOT/spring-cloud-function-core-3.1.0-20201118.030446-258-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
