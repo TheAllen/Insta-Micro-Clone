@@ -1,5 +1,8 @@
 package com.TheAllen.Auth.Service.models;
 
+import lombok.Builder;
+
+@Builder
 public class Role {
 
     private String name;
