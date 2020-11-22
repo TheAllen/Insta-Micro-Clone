@@ -14,3 +14,20 @@ spring:
           configuration:
             key:
               serializer: org.apache.kafka.common.serialization.SpringSerializer
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka
+
+  security:
+    basic:
+      enable: false
+
+  jwt:
+    uri: /auth/**
+    header: Authorization
+    prefix: Bearer
+    expiration: 1.577e7
+    secret: SecretKeyNYC
+
