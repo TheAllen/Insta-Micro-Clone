@@ -13,6 +13,5 @@ A Instagram clone with microservices.
 - Cassandra
 - Apache Kakfa
 
-# Deployment
-- Deploy on Kubernetes
+
 
