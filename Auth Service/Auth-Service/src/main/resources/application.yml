@@ -14,6 +14,10 @@ spring:
           configuration:
             key:
               serializer: org.apache.kafka.common.serialization.SpringSerializer
+      bindings:
+        instaUserChanged:
+          destination: insta.user.changed
+          contentType: application/json
 
 eureka:
   client:

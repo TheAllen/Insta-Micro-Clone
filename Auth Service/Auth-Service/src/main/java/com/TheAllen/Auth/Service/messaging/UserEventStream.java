@@ -6,9 +6,9 @@ import org.springframework.messaging.MessageChannel;
 
 public interface UserEventStream {
 
-    String OUTPUT = "momentsUserChanged";
+    String OUTPUT = "instaUserChanged";
 
     @Output(UserEventStream.OUTPUT)
-    MessageChannel momentsUserChanged();
+    MessageChannel instaUserChanged();
 
 }
