@@ -1,6 +1,7 @@
 package com.TheAllen.Auth.Service.service;
 
 import com.TheAllen.Auth.Service.exceptions.EmailAlreadyExistsException;
+import com.TheAllen.Auth.Service.exceptions.ResourceNotFoundException;
 import com.TheAllen.Auth.Service.exceptions.UsernameAlreadyExistsException;
 import com.TheAllen.Auth.Service.messaging.UserEventSender;
 import com.TheAllen.Auth.Service.models.Role;
@@ -83,10 +84,25 @@ public class UserService {
 
     public User updateUser(User user) {
 
+        // Update the user's username
     }
 
     public User updateProfilePicture(String uri, String id) {
 
+        logger.info("Update profile picture {} for user {}", uri, id);
+
+        return userRepository
+                .findById(id)
+                .map(user -> {
+                    String oldProfilePic = user.getProfile().getProfilePictureUrl();
+                    user.getProfile().setProfilePictureUrl(uri);
+                    User updatedUser = userRepository.save(user);
+
+                    userEventSender.sendUserUpdated(updatedUser, oldProfilePic);
+
+                    return updatedUser;
+                })
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("User id %s not found", id)));
     }
 
 }
