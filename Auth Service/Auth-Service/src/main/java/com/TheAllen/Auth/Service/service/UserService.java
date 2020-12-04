@@ -82,9 +82,20 @@ public class UserService {
         return newUser;
     }
 
-    public User updateUser(User user) {
+    public User updateUser(User user, String newUsername) {
+
+        logger.info("Update user username for user {}", user.getUsername());
 
         // Update the user's username
+        return userRepository.
+                findById(user.getId())
+                .map(u -> {
+                    u.getProfile().setUsername(newUsername);
+                    User updatedUser = userRepository.save(u);
+
+                    return updatedUser;
+                })
+                .orElseThrow(() ->  new ResourceNotFoundException(String.format("User id %s not found", user.getId())));
     }
 
     public User updateProfilePicture(String uri, String id) {
