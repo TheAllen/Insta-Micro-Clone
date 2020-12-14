@@ -1,5 +1,6 @@
 package com.TheAllen.Auth.Service.controller;
 
+import com.TheAllen.Auth.Service.models.*;
 import com.TheAllen.Auth.Service.payload.JwtAuthenticationResponse;
 import com.TheAllen.Auth.Service.payload.LoginRequest;
 import com.TheAllen.Auth.Service.payload.SignUpRequest;
@@ -20,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @Slf4j
@@ -69,7 +73,22 @@ public class UserController {
 
         logger.info("Registering user {}", signUpRequest.getUsername());
 
-        User user =
+        //Create user
+        User user = new User();
+
+        try {
+
+        } catch(Exception e) {
+
+        }
+
+        //Get Location
+        URI location = ServletUriComponentsBuilder
+                        .fromCurrentContextPath().path("/users/{username}")
+                        .buildAndExpand(user.getUsername()).toUri();
+
+        return null;
+
     }
 
 }

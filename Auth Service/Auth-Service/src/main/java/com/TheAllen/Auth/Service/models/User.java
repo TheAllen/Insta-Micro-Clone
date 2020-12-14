@@ -46,7 +46,9 @@ public class User {
     private Profile profile;
     private Set<Role> roles;
 
-    public User() {}
+    public User() {
+
+    }
 
     public User(User user) {
         this.id = user.getId();
