@@ -1,6 +1,7 @@
 package com.TheAllen.Auth.Service.controller;
 
 import com.TheAllen.Auth.Service.models.*;
+import com.TheAllen.Auth.Service.payload.ApiResponse;
 import com.TheAllen.Auth.Service.payload.JwtAuthenticationResponse;
 import com.TheAllen.Auth.Service.payload.LoginRequest;
 import com.TheAllen.Auth.Service.payload.SignUpRequest;
@@ -87,7 +88,9 @@ public class UserController {
                         .fromCurrentContextPath().path("/users/{username}")
                         .buildAndExpand(user.getUsername()).toUri();
 
-        return null;
+        return ResponseEntity
+                .created(location)
+                .body(new ApiResponse(true, "User successfully registered"));
 
     }
 
