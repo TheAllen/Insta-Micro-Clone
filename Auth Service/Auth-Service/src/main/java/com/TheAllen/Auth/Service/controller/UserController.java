@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,7 +71,7 @@ public class UserController {
     }
 
     //Register
-    @RequestMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
 
         logger.info("Registering user {}", signUpRequest.getUsername());
@@ -93,5 +95,20 @@ public class UserController {
                 .body(new ApiResponse(true, "User successfully registered"));
 
     }
+
+    //Edit picture
+    @RequestMapping(value = "/users/me/picture", method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> updateProfilePicture(
+            @RequestBody String profilePicture,
+            @AuthenticationPrincipal InstaUserDetails userDetails) {
+
+        userService.updateProfilePicture(profilePicture, userDetails.getId());
+
+        return ResponseEntity
+                .ok()
+                .body(new ApiResponse(true, "Profile picture successfully updated"));
+    }
+
 
 }
