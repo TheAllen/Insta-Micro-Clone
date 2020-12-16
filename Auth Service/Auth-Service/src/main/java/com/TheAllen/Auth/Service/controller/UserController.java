@@ -1,5 +1,6 @@
 package com.TheAllen.Auth.Service.controller;
 
+import com.TheAllen.Auth.Service.exceptions.ResourceNotFoundException;
 import com.TheAllen.Auth.Service.models.*;
 import com.TheAllen.Auth.Service.payload.ApiResponse;
 import com.TheAllen.Auth.Service.payload.JwtAuthenticationResponse;
@@ -20,10 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -110,5 +108,15 @@ public class UserController {
                 .body(new ApiResponse(true, "Profile picture successfully updated"));
     }
 
+    @RequestMapping(value = "/users/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findUser(@PathVariable("username") String username) {
+
+        logger.info("retrieving user {}", username);
+
+        return userService
+                .findByUsername(username)
+                .map(user -> ResponseEntity.ok(user))
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("User {} not found", username)));
+    }
 
 }
