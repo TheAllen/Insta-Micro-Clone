@@ -119,4 +119,12 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("User {} not found", username)));
     }
 
+    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findUsers() {
+
+        logger.info("retrieving all users");
+
+        return ResponseEntity.ok(userService.findAll());
+    }
+
 }
