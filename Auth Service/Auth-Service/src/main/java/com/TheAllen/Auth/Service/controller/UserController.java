@@ -2,10 +2,7 @@ package com.TheAllen.Auth.Service.controller;
 
 import com.TheAllen.Auth.Service.exceptions.ResourceNotFoundException;
 import com.TheAllen.Auth.Service.models.*;
-import com.TheAllen.Auth.Service.payload.ApiResponse;
-import com.TheAllen.Auth.Service.payload.JwtAuthenticationResponse;
-import com.TheAllen.Auth.Service.payload.LoginRequest;
-import com.TheAllen.Auth.Service.payload.SignUpRequest;
+import com.TheAllen.Auth.Service.payload.*;
 import com.TheAllen.Auth.Service.service.JwtProvider;
 import com.TheAllen.Auth.Service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -125,6 +122,21 @@ public class UserController {
         logger.info("retrieving all users");
 
         return ResponseEntity.ok(userService.findAll());
+    }
+
+    @GetMapping(value = "/users/me", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('user')")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getUserProfile(@AuthenticationPrincipal InstaUserDetails userDetails) {
+        return ResponseEntity.ok(
+                UserSummary
+                        .builder()
+                        .id(userDetails.getId())
+                        .username(userDetails.getUsername())
+                        .name(userDetails.getUserProfile().getDisplayName())
+                        .profilePicture(userDetails.getUserProfile().getProfilePictureUrl())
+                        .build();
+        );
     }
 
 }
