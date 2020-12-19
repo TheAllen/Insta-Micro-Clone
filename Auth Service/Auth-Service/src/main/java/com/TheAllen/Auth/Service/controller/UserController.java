@@ -128,15 +128,14 @@ public class UserController {
     @PreAuthorize("hasRole('user')")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getUserProfile(@AuthenticationPrincipal InstaUserDetails userDetails) {
-        return ResponseEntity.ok(
-                UserSummary
-                        .builder()
-                        .id(userDetails.getId())
-                        .username(userDetails.getUsername())
-                        .name(userDetails.getUserProfile().getDisplayName())
-                        .profilePicture(userDetails.getUserProfile().getProfilePictureUrl())
-                        .build();
-        );
+
+        UserSummary userSummary = new UserSummary();
+        userSummary.setId(userDetails.getId());
+        userSummary.setUsername(userDetails.getUsername());
+        userSummary.setName(userDetails.getProfile().getUsername());
+        userSummary.setProfilePicture(userDetails.getProfile().getProfilePictureUrl());
+
+        return ResponseEntity.ok(userSummary);
     }
 
 }
