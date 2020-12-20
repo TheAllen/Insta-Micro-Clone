@@ -24,6 +24,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -138,4 +140,17 @@ public class UserController {
         return ResponseEntity.ok(userSummary);
     }
 
+    @PostMapping(value = "/users/summary/in", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getUserSummaries(@RequestBody List<String> usernames) {
+
+        logger.info("Retrieving summaries for {} usernames", usernames.size());
+
+        List<UserSummary> summaries = userService
+                                        .findByUsernameIn(usernames)
+                                        .stream()
+                                        .map(user -> convertTo(user))
+                                        .collect(Collectors.toList());
+
+        return ResponseEntity.ok(summaries);
+    }
 }
