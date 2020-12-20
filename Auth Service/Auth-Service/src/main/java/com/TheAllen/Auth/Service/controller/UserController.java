@@ -153,4 +153,17 @@ public class UserController {
 
         return ResponseEntity.ok(summaries);
     }
+
+    //Helper function
+    private UserSummary convertTo(User user) {
+
+        UserSummary userSummary = new UserSummary();
+        userSummary.setId(user.getId());
+        userSummary.setUsername(user.getUsername());
+        userSummary.setName(user.getProfile().getUsername());
+        userSummary.setProfilePicture(user.getProfile().getProfilePictureUrl());
+
+        return userSummary;
+
+    }
 }
