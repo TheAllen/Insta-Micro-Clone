@@ -24,18 +24,18 @@ import static java.util.stream.Collectors.toList;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    @Autowired
     private JwtConfig jwtConfig;
 
-    @Autowired
     private JwtProvider jwtProvider;
 
-    @Autowired
     private UserService userService;
 
     private String serviceUsername;
 
-    public JwtAuthenticationFilter(String serviceUsername) {
+    public JwtAuthenticationFilter(JwtConfig jwtConfig, JwtProvider jwtProvider, UserService userService, String serviceUsername) {
+        this.jwtConfig = jwtConfig;
+        this.jwtProvider = jwtProvider;
+        this.userService = userService;
         this.serviceUsername = serviceUsername;
     }
 
