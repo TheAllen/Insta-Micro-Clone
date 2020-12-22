@@ -24,9 +24,9 @@ eureka:
     service-url:
       default-zone: http://localhost:8761/eureka
 
-  security:
-    basic:
-      enable: false
+security:
+  basic:
+    enable: false
 
   jwt:
     uri: /auth/**
@@ -34,4 +34,8 @@ eureka:
     prefix: Bearer
     expiration: 1.577e7
     secret: SecretKeyNYC
+
+  service:
+    username:
+    password:
 

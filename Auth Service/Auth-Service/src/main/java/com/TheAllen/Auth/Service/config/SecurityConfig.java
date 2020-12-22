@@ -2,6 +2,7 @@ package com.TheAllen.Auth.Service.config;
 
 import com.TheAllen.Auth.Service.service.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -24,6 +25,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtProvider jwtProvider;
+
+    @Value("${security.service.username}")
+    private String serviceUsername;
+
+    @Value("${security.service.password}")
+    private String servicePassword;
 
 
     @Override
