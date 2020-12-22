@@ -1,9 +1,11 @@
 package com.TheAllen.Auth.Service.config;
 
+import com.TheAllen.Auth.Service.models.Role;
 import com.TheAllen.Auth.Service.service.JwtProvider;
 import com.TheAllen.Auth.Service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletResponse;
@@ -59,8 +62,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated(); //rest of the routes are private
     }
 
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
+
+        auth.inMemoryAuthentication()
+                .withUser(serviceUsername)
+                .password(passwordEncoder().encode(servicePassword))
+                .roles(Role.SERVICE.getName());
+
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
+
+
+
+
 }
