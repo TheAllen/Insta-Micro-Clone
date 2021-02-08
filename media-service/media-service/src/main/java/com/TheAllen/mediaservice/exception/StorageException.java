@@ -1,4 +1,16 @@
 package com.TheAllen.mediaservice.exception;
 
-public class StorageException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class StorageException extends RuntimeException {
+
+    public StorageException(String error) {
+        super(error);
+    }
+
+    public StorageException(String error, Throwable cause) {
+        super(error, cause);
+    }
 }
