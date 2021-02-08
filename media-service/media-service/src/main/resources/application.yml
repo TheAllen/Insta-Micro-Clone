@@ -12,3 +12,8 @@ spring:
       file-size-threshold: 2KB
       max-file-size: 5MB
       max-request-size: 20MB
+
+file:
+  upload-dir: /Projects/Instagrame-clone/media-service/
+  path:
+    prefix: /images
