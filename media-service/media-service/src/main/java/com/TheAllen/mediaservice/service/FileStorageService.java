@@ -1,7 +1,10 @@
 package com.TheAllen.mediaservice.service;
 
+import com.TheAllen.mediaservice.exception.InvalidFileException;
+import com.TheAllen.mediaservice.exception.InvalidFilenameException;
 import com.TheAllen.mediaservice.model.ImageMetadata;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.InvalidFileNameException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +40,12 @@ public class FileStorageService {
         try {
             if(file.isEmpty()) {
                 log.warn("{} is empty", filename);
-                throw new InvalidFile
+                throw new InvalidFileException("Cannot store file that is empty " + filename);
+            }
+
+            if(filename.contains("..")) {
+                log.warn("Cannot store file with relative path {}", filename);
+                
             }
         } catch(IOException e) {
             log.error("failed to store file {} error: {}", filename, e);
