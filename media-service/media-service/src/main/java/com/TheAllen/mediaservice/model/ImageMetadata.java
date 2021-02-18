@@ -34,6 +34,12 @@ public class ImageMetadata {
     @NonNull
     private String fileType;
 
+    public ImageMetadata(String filename, String url, String fileType) {
+        this.filename = filename;
+        this.url = url;
+        this.fileType = fileType;
+    }
+
     public String getId() {
         return id;
     }
